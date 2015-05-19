@@ -34,16 +34,12 @@ def loadWords():
 def chooseWord(wordlist):
     """
     wordlist (list): list of words (strings)
-
     Returns a word from wordlist at random
     """
     return random.choice(wordlist)
 
-# end of helper code
-# -----------------------------------
 
 # Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
 wordlist = loadWords()
 
 def isWordGuessed(secretWord, lettersGuessed):
@@ -90,7 +86,6 @@ def getAvailableLetters(lettersGuessed):
     returns: string, comprised of letters that represents what letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE...
     lets = string.ascii_lowercase
     for letter in lets:
         if letter in lettersGuessed:
@@ -103,41 +98,40 @@ def getAvailableLetters(lettersGuessed):
 def hangman(secretWord):
     '''
     secretWord: string, the secret word to guess.
-
     Starts up an interactive game of Hangman.
-
     * At the start of the game, let the user know how many 
       letters the secretWord contains.
-
     * Ask the user to supply one guess (i.e. letter) per round.
-
     * The user should receive feedback immediately after each guess 
       about whether their guess appears in the computers word.
-
     * After each round, you should also display to the user the 
       partially guessed word so far, as well as letters that the 
       user has not yet guessed.
-
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE...
     lettersGuessed = []
     mistakesMade=0
     chances =8
-    getword=getGuessedWord(secretWord,lettersGuessed)
     available = getAvailableLetters(lettersGuessed)
     print "Welcome to the game, Hangman!"
     print "The secret word contains"+" "+ str(len(secretWord))+" "+"letters"
     while mistakesMade <=8:
-        print "You have " + str(chances) + " " + "guesses left"
-        guess = raw_input("Please enter a letter: ").lower()
-        if guess in secretWord:
-            lettersGuessed+=guess
-            print "Good guess:" + str(getword)
-        elif guess not in secretWord:
-            mistakesMade+=1
-            chances +-1
-            print "Oops! That letter is not in my word" + str(getword)
+        if isWordGuessed(secretWord, lettersGuessed):
+            print "Congrats! You won!"
+            break
+        
+        else:
+            
+            print "You have " + str(chances) + " " + "guesses left"
+            guess = raw_input("Please enter a letter: ").lower()
+            if guess in secretWord:
+                lettersGuessed.append(guess)
+                getword = getGuessedWord(secretWord,lettersGuessed)
+                print "Good guess:" + getword
+            elif guess not in secretWord:
+                mistakesMade+=1
+                chances -=1
+                print "Oops! That letter is not in my word" + str(getword)
 
 
 
