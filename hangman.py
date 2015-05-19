@@ -1,4 +1,4 @@
- 6.00 Problem Set 3
+# 6.00 Problem Set 3
 # 
 # Hangman game
 #
@@ -125,17 +125,15 @@ def hangman(secretWord):
             
             print "You have " + str(chances) + " " + "guesses left"
             print "Available letters:" + "" + getAvailableLetters(lettersGuessed)
-            guess = raw_input("Please enter a letter: ").lower()
-            if len(guess) >1:
-                print "Error! Only 1 character is allowed!
-                sys.exit()
-                
-            elif guess in secretWord:
+            guess = raw_input("Please guess a letter: ").lower()
+            if guess in secretWord:
                 lettersGuessed.append(guess)
                 getword = getGuessedWord(secretWord,lettersGuessed)
+                available = getAvailableLetters(lettersGuessed)
                 print "Good guess:" + getword
                 print "---------------"
             elif guess not in secretWord:
+                getAvailableLetters(lettersGuessed)
                 mistakesMade+=1
                 chances -=1
                 getword =getGuessedWord(secretWord, lettersGuessed)
